@@ -33,6 +33,7 @@ public class ArticuloServiceImpl implements ArticuloService {
         response.setCodArti(articuloStockDto.getCodArti());
         response.setNombre(articuloStockDto.getNombre());
         response.setCodAlm(articuloStockDto.getCodAlm());
+        response.setNomAlm(articuloStockDto.getNomAlm());
         response.setRucEmpresa(articuloStockDto.getRucEmpresa());
         response.setStock(articuloStockDto.getStock());
 

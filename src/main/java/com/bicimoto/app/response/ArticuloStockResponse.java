@@ -15,6 +15,8 @@ public class ArticuloStockResponse {
 
     private String codAlm;
 
+    private String nomAlm;
+
     private String rucEmpresa;
 
     private double stock;
