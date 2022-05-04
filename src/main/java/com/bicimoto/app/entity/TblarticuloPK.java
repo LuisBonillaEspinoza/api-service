@@ -5,33 +5,41 @@ import javax.persistence.*;
 
 /**
  * The primary key class for the tblarticulos database table.
- * 
+ *
  */
 @Embeddable
 public class TblarticuloPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
+	@Column(name="CodArt")
 	private String codArt;
 
+	@Column(name="RucEmpresa")
 	private String rucEmpresa;
 
+	@Column(name="Almacen")
 	private String almacen;
 
 	public TblarticuloPK() {
 	}
+
 	public String getCodArt() {
-		return this.codArt;
+		return codArt;
 	}
-	public void setCodArt(String codArt) {
+
+	public void setCod_art(String codArt) {
 		this.codArt = codArt;
 	}
+
 	public String getRucEmpresa() {
-		return this.rucEmpresa;
+		return rucEmpresa;
 	}
+
 	public void setRucEmpresa(String rucEmpresa) {
 		this.rucEmpresa = rucEmpresa;
 	}
+
 	public String getAlmacen() {
 		return this.almacen;
 	}
@@ -47,10 +55,10 @@ public class TblarticuloPK implements Serializable {
 			return false;
 		}
 		TblarticuloPK castOther = (TblarticuloPK)other;
-		return 
-			this.codArt.equals(castOther.codArt)
-			&& this.rucEmpresa.equals(castOther.rucEmpresa)
-			&& this.almacen.equals(castOther.almacen);
+		return
+				this.codArt.equals(castOther.codArt)
+						&& this.rucEmpresa.equals(castOther.rucEmpresa)
+						&& this.almacen.equals(castOther.almacen);
 	}
 
 	public int hashCode() {
@@ -59,7 +67,7 @@ public class TblarticuloPK implements Serializable {
 		hash = hash * prime + this.codArt.hashCode();
 		hash = hash * prime + this.rucEmpresa.hashCode();
 		hash = hash * prime + this.almacen.hashCode();
-		
+
 		return hash;
 	}
 }

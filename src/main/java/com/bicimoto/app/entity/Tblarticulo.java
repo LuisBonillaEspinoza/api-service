@@ -59,6 +59,7 @@ public class Tblarticulo implements Serializable {
 
 	private String genStock;
 
+	@Transient
 	@Lob
 	private byte[] image;
 

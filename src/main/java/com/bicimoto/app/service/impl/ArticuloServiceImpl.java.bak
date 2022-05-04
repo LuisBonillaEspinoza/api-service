@@ -1,0 +1,117 @@
+package com.bicimoto.app.service.impl;
+
+import com.bicimoto.app.dto.ArticuloStockDto;
+import com.bicimoto.app.entity.Tblarticulo;
+import com.bicimoto.app.entity.TblarticuloPK;
+import com.bicimoto.app.entity.Tblstarticulo;
+import com.bicimoto.app.repository.ArticuloRepository;
+import com.bicimoto.app.repository.ArticuloStRepository;
+import com.bicimoto.app.request.ArticuloRequest;
+import com.bicimoto.app.response.ArticuloStockResponse;
+import com.bicimoto.app.service.ArticuloService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class ArticuloServiceImpl implements ArticuloService {
+
+    @Autowired
+    private ArticuloRepository articuloRepository;
+
+    @Autowired
+    private ArticuloStRepository articuloStRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public ArticuloStockResponse findConsultaSotck(String codArti, String codAlmacen, String codEmpresa) throws Exception {
+
+        //ArticuloStockDto articuloStockDto = null;
+        ArticuloStockResponse response = new ArticuloStockResponse();
+        ArticuloStockDto articuloStockDto = articuloStRepository.findArticuloStock(codArti, codAlmacen, codEmpresa);
+
+        if (articuloStockDto==null) {
+            throw new Exception("No existen datos registrados");
+        }
+
+        response.setCodArti(articuloStockDto.getCodArti());
+        response.setNombre(articuloStockDto.getNombre());
+        response.setCodAlm(articuloStockDto.getCodAlm());
+        response.setNomAlm(articuloStockDto.getNomAlm());
+        response.setRucEmpresa(articuloStockDto.getRucEmpresa());
+        response.setStock(articuloStockDto.getStock());
+
+        return response;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<ArticuloRequest> saveDataUpload(List<ArticuloRequest> listaArticuloRequest) throws ParseException {
+
+        for (ArticuloRequest request : listaArticuloRequest) {
+
+            Date fechaActual = new Date();
+
+            Tblarticulo tblarticulo = new Tblarticulo();
+            Tblarticulo tblarticuloExiste = null;
+            TblarticuloPK pk = new TblarticuloPK();
+
+            pk.setCod_art(request.getCodArt());
+            pk.setRucEmpresa(request.getRucEmpresa());
+            pk.setAlmacen(request.getAlmacen());
+
+            tblarticulo.setId(pk);
+
+            tblarticulo.setCantPrecioVolum(request.getCantPrecioVolum());
+            tblarticulo.setCodFamilia(request.getCodFamilia());
+            tblarticulo.setCodInternac(request.getCodInternac());
+            tblarticulo.setCodLinea(request.getCodLinea());
+            tblarticulo.setCodLinea(request.getCodLinea());
+            tblarticulo.setCodMarca(request.getCodMarca());
+            tblarticulo.setCodModelo(request.getCodModelo());
+            tblarticulo.setCodProced(request.getCodProced());
+            tblarticulo.setCodUnidad(request.getCodUnidad());
+            tblarticulo.setDescricpcion(request.getDescricpcion());
+            tblarticulo.setEst(request.getEst());
+            tblarticulo.setFecCreacion(fechaActual);
+            tblarticulo.setGenStock(request.getGenStock());
+            tblarticulo.setIsVehiculo(request.getIsVehiculo());
+            tblarticulo.setNombre(request.getNombre());
+            tblarticulo.setPAraNac(request.getPAraNac());
+            tblarticulo.setParNab(request.getPAraNac());
+            tblarticulo.setPcif(request.getPcif());
+            tblarticulo.setPCosto(request.getPCosto());
+            tblarticulo.setPfob(request.getPfob());
+            tblarticulo.setPMayorista(request.getPMayorista());
+            tblarticulo.setPromedioVenta(request.getPromedioVenta());
+            tblarticulo.setProveedor(request.getProveedor());
+            tblarticulo.setPVenta(request.getPVenta());
+            tblarticulo.setPVolumen(request.getPVolumen());
+            tblarticulo.setStockMin(request.getStockMin());
+            tblarticulo.setStockReal(request.getStockReal());
+            tblarticulo.setTipMoneda(request.getTipMoneda());
+            tblarticulo.setTipProducto(request.getTipProducto());
+            tblarticulo.setTSerie(request.getTSerie());
+            tblarticulo.setUbicacion(request.getUbicacion());
+            tblarticulo.setUserCreacion(request.getUserCreacion());
+            tblarticulo.setVentaMin(request.getVentaMin());
+            articuloRepository.save(tblarticulo);
+
+            //Crear registro en el TblStArticulo, si es que el codigo de Articulo no existe jdoigjoji
+            if (tblarticuloExiste == null) {
+                Tblstarticulo tblStArticulo = new Tblstarticulo();
+                tblStArticulo.setId(null);
+                tblStArticulo.setStock(0);
+                articuloStRepository.save(tblStArticulo);
+            }
+
+        }
+
+        return listaArticuloRequest;
+    }
+
+}

@@ -1,18 +1,17 @@
 package com.bicimoto.app.controller;
 
+import com.bicimoto.app.request.ArticuloRequest;
 import com.bicimoto.app.response.ArticuloStockResponse;
 import com.bicimoto.app.service.ArticuloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/articulo")
@@ -43,6 +42,26 @@ public class ArticuloController {
         }
 
         return new ResponseEntity<ArticuloStockResponse>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/add/upload")
+    public ResponseEntity<?> saveListArticulo(@RequestBody List<ArticuloRequest> request) throws Exception {
+
+        List<ArticuloRequest> newArticulo = new ArrayList<>();
+
+        try {
+
+            newArticulo = articuloService.saveDataUpload(request);
+
+        } catch (Exception e) {
+            return buildResponseError("Error al registrar los datos", e);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Mensaje", "Registros creados satisfactoriamente");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
     }
 
     private ResponseEntity<Map<String, Object>> buildResponseError(String error, Exception exception) {
