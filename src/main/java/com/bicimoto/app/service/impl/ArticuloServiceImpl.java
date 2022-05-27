@@ -52,6 +52,8 @@ public class ArticuloServiceImpl implements ArticuloService {
     @Transactional(rollbackFor = Exception.class)
     public List<ArticuloRequest> saveDataUpload(List<ArticuloRequest> listaArticuloRequest) throws ParseException {
 
+        byte[] emptyArray = new byte[0];
+
         for (ArticuloRequest request : listaArticuloRequest) {
 
             Date fechaActual = new Date();
@@ -101,6 +103,7 @@ public class ArticuloServiceImpl implements ArticuloService {
             tblArticulo.setUbicacion(request.getUbicacion());
             tblArticulo.setUserCreacion(request.getUserCreacion());
             tblArticulo.setVentaMin(request.getVentaMin());
+            tblArticulo.setImage(emptyArray);
             articuloRepository.save(tblArticulo);
 
             if (tblArticuloExiste == null) {
