@@ -1,6 +1,7 @@
 package com.bicimoto.app.service.impl;
 
 import com.bicimoto.app.dto.ArticuloStockDto;
+import com.bicimoto.app.dto.ProductoDto;
 import com.bicimoto.app.entity.Tblarticulo;
 import com.bicimoto.app.entity.TblarticuloPK;
 import com.bicimoto.app.entity.Tblstarticulo;
@@ -9,12 +10,15 @@ import com.bicimoto.app.repository.ArticuloRepository;
 import com.bicimoto.app.repository.ArticuloStRepository;
 import com.bicimoto.app.request.ArticuloRequest;
 import com.bicimoto.app.response.ArticuloStockResponse;
+import com.bicimoto.app.response.ProductoResponse;
+import com.bicimoto.app.response.ProductoResponseGen;
 import com.bicimoto.app.service.ArticuloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -125,4 +129,37 @@ public class ArticuloServiceImpl implements ArticuloService {
         return listaArticuloRequest;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductoResponse> findProductosByID(String codigo ) throws Exception  {
+        List<ProductoResponse>  productList = new ArrayList<>();
+        List<ProductoDto>   productoDto = articuloRepository.findProductosByID(codigo);
+        for (ProductoDto produc : productoDto ){
+            ProductoResponse response = new ProductoResponse();
+            response.setCodArt(produc.getCodArt());
+            response.setNombreAlmacen(produc.getNombreAlmacen());
+            response.setStock(produc.getStock());
+            productList.add(response);
+        }
+        return productList;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductoResponseGen> findProductos() throws Exception {
+
+        List<ProductoResponseGen>  productList = new ArrayList<>();
+        List<ProductoDto>   productoDto = articuloRepository.findProductos();
+        for (ProductoDto produc : productoDto ){
+            ProductoResponseGen response = new ProductoResponseGen();
+            response.setCodArt(produc.getCodArt());
+            response.setNombre(produc.getNombre());
+            response.setPCosto(produc.getPCosto());
+            response.setPVenta(produc.getPVenta());
+            response.setStockMin(produc.getStockMin());
+            response.setStock(produc.getStock());
+            productList.add(response);
+        }
+        return productList;
+    }
 }
