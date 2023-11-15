@@ -1,0 +1,43 @@
+package com.bicimoto.app.dto;
+
+public interface DatosScheduleDTO {
+    String getRazon();
+    String getNombreLegal();
+    String getUbigeo();
+    String getDireccion();
+    String getUrbanizacion();
+    String getTelefono();
+    String getCelular();
+    String getRepresentante();
+    String getEmail();
+    String getTelefono2();
+    String getNombreRegion();
+    String getNombreProvincia();
+    String getNombreDistrito();
+    String getNombreCliente();
+    String getEmailCliente();
+    String getCodCliente();
+    String getTMoneda();
+    String getIdVenta();
+    String getFecha();
+    String getDoc();
+    String getCodDoc();
+    String getNomArchXml();
+    String getArchivoXml();
+    String getUsuario();
+    String getTipDocCli();
+    String getTComp();
+    String getDcto();
+    String getTBruto();
+    String getTExonerada();
+    String getTInafecta();
+    String getTGratuita();
+    String getTIgv();
+    String getEGratuita();
+    String getTotal();
+    String getTVenta();
+    String getSerie();
+    String getPrefijoSerie();
+    String getNumero();
+    String getCodTComp();
+}

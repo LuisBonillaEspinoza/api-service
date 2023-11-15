@@ -28,7 +28,6 @@ public class ArticuloController {
 		List<ProductoResponseGen> response = new ArrayList<>();
 
 		try {
-
 			response = articuloService.findProductos();
 		} catch (Exception e) {
 			return buildResponseError("Error en consulta, no pueden obetener los datos", e);
@@ -67,7 +66,6 @@ public class ArticuloController {
 		List<ProductoResponse> response = null;
 
 		try {
-
 			response = articuloService.findProductosByID(codigo);
 
 		} catch (Exception e) {
