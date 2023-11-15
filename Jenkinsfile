@@ -29,8 +29,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQubePruebas') {
                     sh './gradlew sonarqube \
-                    -Dsonar.projectKey=gradle-jenkins \
-                    -Dsonar.host.url=http://sonar:9000'
+                    -Dsonar.projectKey=gradle-jenkins'
                 }
             }
         }
