@@ -28,9 +28,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarQubePruebas') {
-                    withCredentials([usernamePassword(credentialsId: 'sonarqube-credentials', usernameVariable: 'admin', passwordVariable: 'meteorocet1')]) {
-                        sh './gradlew sonarqube'
-                    }
+                    sh './gradlew sonarqube'
                 }
             }
         }
