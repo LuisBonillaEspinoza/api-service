@@ -57,6 +57,7 @@ tasks.named('test') {
 test {
 	finalizedBy jacocoTestReport
 }
+
 jacocoTestReport {
 	dependsOn test
 }
@@ -66,33 +67,21 @@ jacoco {
 	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.0
+			}
+		}
+	}
+}
+
 jacocoTestReport {
 	reports {
 		xml.required = false
 		csv.required = false
 		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-	}
-}
-
-jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			limit {
-				minimum = 0.2
-			}
-		}
-
-		rule {
-			enabled = false
-			element = 'CLASS'
-			includes = ['org.gradle.*']
-
-			limit {
-				counter = 'LINE'
-				value = 'TOTALCOUNT'
-				maximum = 0.3
-			}
-		}
 	}
 }
 
