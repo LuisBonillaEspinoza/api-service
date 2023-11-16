@@ -3,6 +3,7 @@ package com.bicimoto.app.controller;
 import com.bicimoto.app.repository.IngresoRepository;
 import com.bicimoto.app.request.IngresoRequest;
 import com.bicimoto.app.service.IngresoService;
+import com.bicimoto.app.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,15 +33,15 @@ public class IngresoController {
             remisionRequest = guiaRemisionService.saveGuiaRemision(request , null);
 
         } catch (Exception e){
-            return buildResponseError("Error al registrar los datos", e);
+            return buildResponseError(Constants.MensajeErrorRegistro, e);
         }
 
         if (remisionRequest == null) {
-            throw new Exception("No se puede realizar el registro de la información");
+            throw new Exception(Constants.MensajeNuloRegistro);
         }
 
         Map<String, Object> response = new HashMap<>();
-        response.put("Mensaje", "Registro creado satisfactoriamente");
+        response.put(Constants.Mensaje, Constants.MensajeAceptadoRegistro);
 
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
@@ -54,15 +55,15 @@ public class IngresoController {
             remisionRequest = guiaRemisionService.saveGuiaRemision(request, id);
 
         } catch (Exception e){
-            return buildResponseError("Error al modificar los datos", e);
+            return buildResponseError(Constants.MensajeErrorModificar, e);
         }
 
         if (remisionRequest == null) {
-            throw new Exception("No se puede realizar la modificación de la información");
+            throw new Exception(Constants.MensajeNuloModificar);
         }
 
         Map<String, Object> response = new HashMap<>();
-        response.put("Mensaje", "Registro actualizado satisfactoriamente");
+        response.put(Constants.Mensaje, Constants.MensajeAceptadoModificar);
 
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }

@@ -5,14 +5,11 @@ import com.bicimoto.app.response.ArticuloStockResponse;
 import com.bicimoto.app.response.ProductoResponse;
 import com.bicimoto.app.response.ProductoResponseGen;
 import com.bicimoto.app.service.ArticuloService;
+import com.bicimoto.app.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.*;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -30,10 +27,10 @@ public class ArticuloController {
 		try {
 			response = articuloService.findProductos();
 		} catch (Exception e) {
-			return buildResponseError("Error en consulta, no pueden obetener los datos", e);
+			return buildResponseError(Constants.MensajeExcepcion, e);
 		}
 		if (response == null) {
-			return buildResponseError("No se encontraron datos en la base de datos", null);
+			return buildResponseError(Constants.MensajeErrorNulo, null);
 		}
 		return new ResponseEntity<List<ProductoResponseGen>>(response, HttpStatus.OK);
 	}
@@ -50,11 +47,11 @@ public class ArticuloController {
 					(params.get("empresa") != null ? params.get("empresa") : null));
 
 		} catch (Exception e) {
-			return buildResponseError("Error en consulta, no pueden obetener los datos", e);
+			return buildResponseError(Constants.MensajeExcepcion, e);
 		}
 
 		if (response == null) {
-			return buildResponseError("No se encontraron datos en la base de datos", null);
+			return buildResponseError(Constants.MensajeErrorNulo, null);
 		}
 
 		return new ResponseEntity<ArticuloStockResponse>(response, HttpStatus.OK);
@@ -69,11 +66,11 @@ public class ArticuloController {
 			response = articuloService.findProductosByID(codigo);
 
 		} catch (Exception e) {
-			return buildResponseError("Error en consulta, no pueden obetener los datos", e);
+			return buildResponseError(Constants.MensajeExcepcion, e);
 		}
 
 		if (response == null) {
-			return buildResponseError("No se encontraron datos en la base de datos", null);
+			return buildResponseError(Constants.MensajeErrorNulo, null);
 		}
 
 		return new ResponseEntity<List<ProductoResponse>>(response, HttpStatus.OK);
@@ -85,15 +82,13 @@ public class ArticuloController {
 		List<ArticuloRequest> newArticulo = new ArrayList<>();
 
 		try {
-
 			newArticulo = articuloService.saveDataUpload(request);
-
 		} catch (Exception e) {
-			return buildResponseError("Error al registrar los datos", e);
+			return buildResponseError(Constants.MensajeErrorRegistro, e);
 		}
 
 		Map<String, Object> response = new HashMap<>();
-		response.put("Mensaje", "Registros creados satisfactoriamente");
+		response.put(Constants.Mensaje, Constants.MensajeAceptadoRegistro);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
@@ -109,7 +104,7 @@ public class ArticuloController {
 				error = exception.getMessage();
 			}
 		}
-		response.put("Mensaje", error);
+		response.put(Constants.Mensaje, error);
 		return new ResponseEntity<Map<String, Object>>(response, httpStatus);
 	}
 
