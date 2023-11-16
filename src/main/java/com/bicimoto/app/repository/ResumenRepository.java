@@ -1,7 +1,5 @@
 package com.bicimoto.app.repository;
 
-import com.bicimoto.app.dto.ComuBajaDTO;
-import com.bicimoto.app.dto.DetComuBajaDTO;
 import com.bicimoto.app.dto.DetResumenDTO;
 import com.bicimoto.app.dto.ResumenDTO;
 import com.bicimoto.app.entity.Tblresumen;

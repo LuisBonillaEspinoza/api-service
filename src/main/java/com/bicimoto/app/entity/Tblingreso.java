@@ -47,10 +47,7 @@ public class Tblingreso implements Serializable {
 	private String userCreacion;
 
 	private String userModi;
-
-	public Tblingreso() {
-	}
-
+	
 	public String getId() {
 		return this.id;
 	}
